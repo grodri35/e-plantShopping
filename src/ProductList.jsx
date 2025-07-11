@@ -272,38 +272,43 @@ function ProductList({ onHomeClick }) {
 
     return (
         <>
-          {!showCart ? (
-            <div className="product-grid">
-              {plantsArray.map((category, categoryIndex) => (
-                <div key={categoryIndex} className="category-section">
-                  <h2 className="category-title">{category.category}</h2>
-                  <div className="plants-grid">
-                    {category.plants.map((plant, plantIndex) => (
-                      <div key={plantIndex} className="product-card">
-                        <img src={plant.image} alt={plant.name} className="product-image" />
-                        <div className="product-details">
-                          <h3 className="product-name">{plant.name}</h3>
-                          <p className="product-description">{plant.description}</p>
-                          <p className="product-cost">{plant.cost}</p>
-                          <button
-                            className={`add-to-cart-btn ${addedToCart[plant.name] ? 'added' : ''}`}
-                            onClick={() => handleAddToCart(plant)}
-                            disabled={addedToCart[plant.name]}
-                          >
-                            {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
-                          </button>
-                        </div>
+      {!showCart ? (
+        <>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem' }}>
+            <button onClick={handleCartClick}>🛒 View Cart</button>
+          </div>
+          <div className="product-grid">
+            {plantsArray.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="category-section">
+                <h2 className="category-title">{category.category}</h2>
+                <div className="plants-grid">
+                  {category.plants.map((plant, plantIndex) => (
+                    <div key={plantIndex} className="product-card">
+                      <img src={plant.image} alt={plant.name} className="product-image" />
+                      <div className="product-details">
+                        <h3 className="product-name">{plant.name}</h3>
+                        <p className="product-description">{plant.description}</p>
+                        <p className="product-cost">{plant.cost}</p>
+                        <button
+                          className={`add-to-cart-btn ${addedToCart[plant.name] ? 'added' : ''}`}
+                          onClick={() => handleAddToCart(plant)}
+                          disabled={addedToCart[plant.name]}
+                        >
+                          {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
+                        </button>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <CartItem onContinueShopping={handleContinueShopping} />
-          )}
+              </div>
+            ))}
+          </div>
         </>
-      );
-    }
-    
-    export default ProductList;
+      ) : (
+        <CartItem onContinueShopping={handleContinueShopping} />
+      )}
+    </>
+  );
+}
+
+export default ProductList;

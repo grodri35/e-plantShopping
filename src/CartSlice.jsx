@@ -16,21 +16,18 @@ const cartSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
-      const nameToRemove = action.payload;
-      state.items = state.items.filter(item => item.name !== nameToRemove);
+      const name = action.payload;
+      state.items = state.items.filter(item => item.name !== name);
     },
     updateQuantity: (state, action) => {
       const { name, quantity } = action.payload;
-      const itemToUpdate = state.items.find(item => item.name === name);
-      if (itemToUpdate) {
-        itemToUpdate.quantity = quantity;
+      const item = state.items.find(item => item.name === name);
+      if (item) {
+        item.quantity = quantity;
       }
-    },
+    }
   },
 });
 
-// Export actions for use in components
 export const { addItem, removeItem, updateQuantity } = cartSlice.actions;
-
-// Export reducer to configure the store
 export default cartSlice.reducer;
