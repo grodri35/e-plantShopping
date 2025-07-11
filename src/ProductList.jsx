@@ -12,6 +12,9 @@ function ProductList({ onHomeClick }) {
     
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
+
+
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -240,6 +243,13 @@ function ProductList({ onHomeClick }) {
         textDecoration: 'none',
     }
 
+    const cartItems = useSelector(state => state.cart.items);
+
+    const calculateTotalQuantity = () => {
+             return cartItems ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+    };
+
+
     const handleAddToCart = (plant) => {
         dispatch(addItem(plant));
         setAddedToCart((prev) => ({
@@ -254,9 +264,11 @@ function ProductList({ onHomeClick }) {
     };
 
     const handleCartClick = (e) => {
-        e.preventDefault();
-        setShowCart(true); // Set showCart to true when cart icon is clicked
+        console.log("Cart button clicked");
+        setShowCart(true);
     };
+      
+
     const handlePlantsClick = (e) => {
         e.preventDefault();
         setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
@@ -275,8 +287,11 @@ function ProductList({ onHomeClick }) {
       {!showCart ? (
         <>
           <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1rem' }}>
-            <button onClick={handleCartClick}>🛒 View Cart</button>
-          </div>
+  <button onClick={handleCartClick}>
+    🛒 View Cart ({calculateTotalQuantity()})
+  </button>
+</div>
+
           <div className="product-grid">
             {plantsArray.map((category, categoryIndex) => (
               <div key={categoryIndex} className="category-section">
